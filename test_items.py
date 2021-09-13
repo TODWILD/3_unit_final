@@ -1,21 +1,13 @@
-import pytest
-import time
-import math
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+from time import sleep
 
-def test_eng_add_button_should_be_seen(browser,language1):
+link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
 
-    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-    browser.get(link)
-    time.sleep(1) 
-    l=browser.find_element(By.CSS_SELECTOR, "[value={}]".format(str(language1)))#выбор языка
-    l.click()
-    time.sleep(3)
-    button=browser.find_element_by_css_selector("button.btn.btn-default")#смена языка на сайте
-    button.click()
-    time.sleep(10)
-    add_button = browser.find_element_by_class_name(".btn-add-to-basket").is_enabled()
 
-    assert add_button, "Отсутствует кнопка добавления товара в корзину"
+def test_is_displayed_basket_btn(browser):
+    browser[0].get(link)
+    assert browser[0].find_elements_by_css_selector(
+           '#add_to_basket_form .btn-add-to-basket'), (
+           f'Basket button is not found on page {link} '
+           f'for language "{browser[1]}"')
+    sleep(3)
     
